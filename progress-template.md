@@ -11,51 +11,63 @@ Keep it short. It is a working file read at the start of every session, not a tr
 ```markdown
 # System Design Course — Progress
 
-Track: <full course | interview sprint | named track from curriculum.md>
-Goal: <interviews | a real design at work | depth>
-Session length: <15 | 30 | 60> min
+Mode: <guided | socratic>
+Products they use: <Netflix, Amazon, WhatsApp... — the examples to teach through>
+Pace: <short chapters | longer deep dives>
 Started: <YYYY-MM-DD>   Last session: <YYYY-MM-DD>
+Chapters done: <n>   Current run: <n sessions in a row>
 
 ## Current
-Chapter: <N — title>
-Stopped at: <beat number and what was in progress>
-Resume with: <the one thing to pick up>
+Part: <Part 0 — Ground floor>
+Chapter: <N — title>  (<i> of <j> in this part)
+Stopped at: <beat and what was in progress>
 
 ## Completed
 | Ch | Title | Date | Exit check | Confidence |
 |----|-------|------|-----------|------------|
 | 1 | The path of one request | 2026-09-02 | pass | strong |
-| 2 | Latency, and why distance is the boss | 2026-09-02 | pass on 2nd try | shaky |
 
 ## Weak spots
-Oldest first. One is asked at the start of every session. Retire only after two
-correct recalls in separate sessions.
+One is asked at the start of each session, oldest first. Retire after two correct
+recalls in separate sessions.
 | Ch | The specific gap | Added | Correct recalls |
 |----|------------------|-------|-----------------|
-| 2 | Could not connect p99 to fan-out request count | 2026-09-02 | 0 |
 
-## Learner's systems
-Anchor at least one example per chapter here.
-- <domain, stack, the systems they actually work on>
-- <the part they said they were least sure about, from placement>
+## Stories used
+Avoid repeating a story across chapters.
+- Ch 1 — Amazon's 100 ms latency experiment
 
 ## Notes
-- <pacing preference, topics to skip, an interview date, anything that changes delivery>
+- <what engaged them, what bored them, jargon to avoid, anything that changes delivery>
 ```
 
 ---
 
 ## Update rules
 
+**Mode** is the most important field. Once it is `guided`, keep teaching before asking until
+the learner answers two recognition questions confidently. Flipping back too early is what
+makes a session feel like an exam.
+
 **Confidence** is honest, not encouraging: `strong` means they could explain it to someone
-else, `ok` means they got it with one nudge, `shaky` means they passed but the reasoning
-wobbled. A `shaky` chapter also gets a weak-spot row.
+else, `ok` means they got it with one nudge, `shaky` means the reasoning wobbled. A `shaky`
+chapter also gets a weak-spot row.
 
-**Exit check** records what happened: `pass`, `pass on 2nd try`, or `deferred` if the session
-ran out. A chapter with a deferred exit check is not complete and stays as Current.
+**Exit check** records `pass`, `pass on 2nd try`, or `deferred`. A deferred exit check means
+the chapter stays as Current.
 
-**Weak spots** hold the specific gap, not the topic. "Chapter 19" is useless six weeks later;
-"picked a shard key without asking about the query pattern" is a question you can re-ask.
+**Weak spots** hold the specific gap, not the topic. "Chapter 19" is useless six weeks
+later; "picked a shard key without asking about the query pattern" is a question you can
+re-ask.
 
-**Learner's systems** is the highest-value section. A concept explained through something
-they maintain lands harder than the same concept explained through Twitter's timeline.
+**Chapters done and current run** exist to show momentum. Mention the count when it is
+encouraging and never mention the 72.
+
+**Stories used** stops the course reusing Knight Capital or the Facebook outage three times.
+Every chapter gets a fresh story.
+
+**Notes** is where engagement lives. Record which stories landed and which explanations
+fell flat — that is what makes the next session better than the last one.
+
+**Never record or teach through the learner's own employer, product or industry.** Examples
+come from famous consumer products only — see "Which examples to use" in `SKILL.md`.

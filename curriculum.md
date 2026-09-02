@@ -1,8 +1,15 @@
 # Curriculum — 72 chapters, 10 parts
 
+**This file is the map, not the lesson.** Never show it to the learner unless they type
+`map`, and never show more than the current part. A 72-row wall is the fastest way to make
+someone quit.
+
 Each entry is a one-session chapter. `Needs` lists prerequisite chapters; warn once if the
-learner jumps past one, then teach anyway if they insist. `In the wild` names the systems
-that must appear in beat 7 — add more, never fewer.
+learner jumps past one, then teach anyway if they insist.
+
+`In the wild` here is raw material, not a script. The chapter opens with a **story** from
+`stories.md` — a named company, a number, and a consequence. Turn these lines into stories;
+do not read them out as facts.
 
 Chapter numbers are stable. Never renumber; the progress file references them.
 

@@ -1,240 +1,197 @@
 # Lesson format
 
-How a chapter is actually delivered. The worked example at the bottom is the quality bar.
+A chapter is a six-message conversation, not a document. The worked example at the bottom is
+the quality bar — notice how short every message is.
 
-## Message boundaries
+## The shape
 
-This is the mechanic that makes the course interactive rather than a lecture with questions
-sprinkled in. A chapter is not one message. It is four to seven messages, and **every one of
-them except the last ends on a question**.
+| Msg | Beat | Ends with |
+|-----|------|-----------|
+| 1 | The story | An easy question |
+| 2 | The idea + small diagram | A checkpoint |
+| 3 | Where you've already seen it | Guess-the-number |
+| 4 | The catch — one failure, one trade-off | "What do you think breaks?" |
+| 5 | The payoff line | The exit check |
+| 6 | Verdict, one-line recap, progress saved | Offer of the next chapter |
 
-A rough shape for a 30-minute session:
+Every message except the last ends on a question, and **the message stops at the question**.
+Never answer your own question in the same message you asked it.
 
-| Message | Carries | Ends with |
-|---------|---------|-----------|
-| 1 | Chapter header, hook (beat 1) | The predict question (beat 2) |
-| 2 | Response to their answer, mental model, diagram, walkthrough (3-5) | A checkpoint |
-| 3 | Numbers, in the wild (6-7) | "What breaks first?" (beat 8) |
-| 4 | Failure modes, trade-offs (8-9) | The exit check (beat 10) |
-| 5 | Verdict on the exit check, recap, progress update | Offer of the next chapter |
+If you are about to send two paragraphs with no question between them, you are writing a
+document. Split it and ask something.
 
-Never write message 2 and message 3 as one message. If the learner has not spoken between
-two of your paragraphs, one of those paragraphs is in the wrong message.
+## Beat 1 — The story
 
-## Beat contents
+Straight from `stories.md`. Three or four sentences. Named company, era, number,
+consequence. Then one question the learner can answer *without knowing anything yet*.
 
-**1 · Hook.** A specific broken situation with a number in it. "Your single app server is at
-80% CPU at peak" beats "sometimes you need more than one server". Two to four sentences.
+Good opening questions in Guided mode:
 
-**2 · Predict.** Ask them to solve it before you do. Best form: "name one way to do X, and
-one thing that breaks about your idea." Asking for the flaw too stops a one-word answer and
-tells you their real depth immediately.
+- "Before I explain — would you rather the site be slow, or show you slightly wrong data?"
+- "Guess how many servers that took."
+- "Has that ever happened to you as a user?"
 
-**3 · Mental model.** One paragraph, no jargon that has not been earned. If it needs two
-paragraphs, the chapter is really two chapters.
+Bad opening question, and the mistake that kills a first session:
 
-**4 · Diagram.** Conventions in `diagram-kit.md`. Never a diagram without a numbered path in
-prose underneath it.
+- "List every place the request could have slowed down." — the learner has not been taught
+  a single hop yet. This asks them to already know the chapter.
 
-**5 · Component walkthrough.** A table, one row per box:
+## Beat 2 — The idea and the picture
 
-| Component | Job | Why it exists | Gone tomorrow → | Real tech |
-|-----------|-----|---------------|-----------------|-----------|
+One paragraph, plain language, no jargon that has not been earned. Then a small diagram, 6
+to 12 lines. Then a checkpoint.
 
-The "gone tomorrow" column does most of the teaching. A learner who cannot say what breaks
-when a component is removed does not understand why it is there.
+If the idea needs two paragraphs, it is two chapters.
 
-**6 · Numbers.** Latency, throughput, size or cost, with units, tied to a decision. State
-whether a number is an order of magnitude or a measured figure. Never invent a precise
-figure to sound authoritative — round and say it is rounded.
+## Beat 3 — Where you have already seen it
 
-**7 · In the wild.** Three or more named systems, and the point is where they *disagree*.
-"Discord moved from MongoDB to Cassandra to ScyllaDB" is a fact; "and they bucket messages by
-channel and time window, because their read pattern is always a recent slice of one channel"
-is the lesson. Anchor one example in the learner's own domain when the progress file records
-what they work on.
+The click of recognition. Two or three product moments, told as moments:
 
-**8 · Break it.** Ask "what breaks first at 10x?" or "which box here is a single point of
-failure?" before answering. Cover the failure modes, then the limits — the things this
-concept genuinely cannot do, which is where the next chapter usually starts.
+> When you hit play on Netflix and it starts in about a second — that is this. When Amazon
+> deploys new code at 2 p.m. on a Tuesday and you never notice — that is this too.
 
-**9 · Trade-offs.** A table of alternatives, each with the condition that flips the choice:
+Not a list of company names. Not a table. The point is that they have been using this thing
+for years without a word for it, and now they have the word.
 
-| Option | Buys you | Costs you | Choose it when |
-|--------|----------|-----------|----------------|
+## Beat 4 — The catch
 
-**10 · Exit check.** A design task, never "define X". See below.
+**One** failure mode. **One** trade-off. Ask before revealing:
 
-## Checkpoint question shapes
+> This box now decides where every request goes. What worries you about that?
 
-Rotate these; the same shape twice in one chapter goes stale.
+A beginner will say "what if it breaks" and be completely right, which is a great moment —
+they just derived single-point-of-failure on their own. Say so.
 
-- **Predict the mechanism** — "Before I show you: how would you keep the counter accurate across three servers?"
-- **Break the thing** — "The cache is at a 95% hit rate. The database handles 2,000 QPS. Traffic is 30,000 QPS. What happens the moment the cache restarts?"
-- **Choose and justify** — "Shard by `user_id` or by `created_at`? Pick one and tell me the query that becomes expensive."
-- **Spot the flaw** — "Here's my design. There is one single point of failure I did not mark. Where?"
-- **Change a constraint** — "Now the write rate is 100x and reads are unchanged. What is the first thing you change?"
-- **Transfer** — "Where else have you seen this exact pattern?"
-- **Estimate** — "Roughly how much storage does a year of this cost?"
+## Beat 5 — The payoff
 
-Never ask two questions in one message. If two feel necessary, the second one is the next
-message.
+One sentence they could say out loud at work tomorrow. Then the exit check: a scenario with
+stakes, never a definition.
 
-## Responding to answers
+> You are on call. Checkout latency jumped from 200 ms to 4 seconds. Database CPU is at 30%.
+> Where do you look first, and why not the database?
 
-**Correct** — say so in one word, add the one detail they left out, move on. Do not restate
-their answer back at them.
+## Question difficulty
 
-**Half right** — name the correct half explicitly before the wrong half. "Right that it
-needs a lock. Wrong about where the lock lives — try again: if the lock is in the
-application process, what happens with three application processes?"
+Match the question to the mode, and drop a level the moment an answer comes back thin.
 
-**Wrong** — do not correct yet. Give a counter-example that makes the flaw visible and
-re-ask once. Only after the second attempt, explain. A learner who watches their own model
-break remembers it; a learner who is told remembers nothing.
+| Level | Shape | Example |
+|-------|-------|---------|
+| 1 — Recognition | Pick between two | "Slow page, or slightly stale data?" |
+| 2 — Guess | Estimate a number | "How many servers did that take?" |
+| 3 — Apply | Use the idea just taught | "Where would you put the cache here?" |
+| 4 — Generate | Produce a design | "How would you keep the count accurate across three servers?" |
 
-**"I don't know"** — smallest possible hint, re-ask. Second time on the same point, teach it
-plainly and re-ask a variant three beats later.
+Level 4 is for Socratic mode only. Opening a first-ever session at level 4 is what makes a
+learner say "I don't know anything" and stop.
 
-**They ask a question back** — answer it at full depth, then return to the beat. Curiosity
-is the whole point and outranks the plan.
+## Handling answers
 
-**They are clearly ahead** — say so and skip to beat 8. Being taught something you already
-know is how people stop showing up.
+**Correct** — one word, add the detail they missed, move on. Do not restate their answer.
 
-## Exit checks
+**Half right** — name the right half first, then re-ask the other half narrowly.
 
-A good exit check makes them apply the chapter to a situation not covered in the chapter. It
-should be answerable in a short paragraph or a small sketch, and it should be possible to
-get it wrong.
+**Wrong** — a counter-example, then re-ask once. Explain only after the second attempt.
 
-Bad: "What is the difference between L4 and L7?"
-Good: "Your API and your WebSocket chat share one hostname. Which load balancer type for
-each path, and what happens to an open chat socket when you deploy?"
+**"I don't know"** — this is a signal about *your question*, not about them. Switch to
+Guided silently: teach the beat in two sentences, then ask a level-1 or level-2 question on
+the same point. Never repeat the question that failed.
 
-Bad: "Explain cache-aside."
-Good: "A product page is cached for 5 minutes. Someone edits the price. Legal says the wrong
-price cannot be shown for more than 10 seconds. You have 200 edge locations. What do you
-change?"
+**Thin answers, "ok", no questions back** — fatigue. Close the chapter with the payoff line
+and stop. Do not push to finish the arc.
 
-Bad: "What is a saga?"
-Good: "Order, payment and inventory are three services. Payment succeeds, inventory says out
-of stock. Walk me through what your system does in the next 30 seconds."
-
-Mark the chapter complete only when the answer holds up. If it does not, say which part is
-missing, teach only that part, and re-ask a variant. Then record the confidence rating
-honestly — an inflated one costs them a real interview later.
+**They ask something off-topic** — answer it properly and briefly, then return. Curiosity
+outranks the plan.
 
 ---
 
-## Worked example — Chapter 8, Load balancers
+## Worked example — Chapter 8, Load balancers, Guided mode
 
-Abbreviated in the middle beats, but the shape and the voice are exact.
+### Message 1 — the story
 
-### Message 1
-
-> **Chapter 8 — Load balancers**
-> Answers: how do fifty machines hide behind one address?
-> By the end you'll be able to place a load balancer in a design, choose L4 or L7 with a
-> reason, and say what happens to in-flight requests during a deploy.
+> **Chapter 8 — Load balancers.** How fifty machines hide behind one address.
 >
-> Your app runs on one server. At peak it sits at 80% CPU and the p99 is starting to climb,
-> so you buy a second server. You now have two IP addresses, and your users have exactly one
-> thing they type into a browser.
+> Google got tired of buying expensive load-balancing hardware that could not be scaled or
+> deployed like the rest of their fleet, so they wrote one in software and ran it on
+> ordinary servers. That thing, Maglev, front-ends Google Search.
 >
-> Before I show you the standard answer: name one way to send half your users to server B,
-> and one thing that breaks about your idea.
-
-*The message stops here. No answer, no hedging, no "here's a hint in case".*
-
-### Message 2 — learner said "two A records in DNS, round robin"
-
-> Correct, and it's not a toy answer — DNS round robin still balances a real share of the
-> internet's first tier. The thing that breaks is the one you'd hit on your first outage:
-> DNS answers are cached. Server B dies, you pull the record, and resolvers keep handing out
-> the dead address for the whole TTL — and plenty of resolvers ignore your TTL anyway. You
-> also can't route by path, can't drain a server before a deploy, and can't react to one
-> backend getting slow rather than dead.
+> Meanwhile Stack Overflow — which a large fraction of the world's programmers hit every
+> single day — ran behind a single piece of open-source software called HAProxy on a
+> famously small number of machines.
 >
-> The gap is that DNS decides once per lookup. You need a decision **per request**. That
-> device is the load balancer: it owns the public address, keeps a list of backends it
-> believes are healthy, and picks one for every connection.
+> Guess first: how many web servers do you think Stack Overflow needed?
+
+*Stops. A guess cannot be "wrong" enough to discourage anyone, which is exactly why it is
+the opening question.*
+
+### Message 2 — the idea and the picture
+
+> About nine. That surprises most people, and the surprise is the lesson: the hard part is
+> rarely "more servers", it is *deciding which server*.
+>
+> Here is the problem. You have three app servers, but your users only know one thing —
+> `stackoverflow.com`. Something has to sit in front, hold that one address, and pick a
+> server for every single request.
 >
 > ```
->                            ┌──────────────┐
->                            │    Client    │
->                            └──────┬───────┘
->              (1) DNS api.example.com → 203.0.113.10 (anycast VIP)
->                                   │
->                                   ▼  (2) TLS handshake terminates here
->                    ╭──────────────────────────────╮
->                    │  L7 LB — Envoy, 3 nodes      │
->                    │  route by path · least-conn  │
->                    │  retry · drain · slow start  │
->                    ╰───┬──────────┬──────────┬────╯
->          (3) HTTP/2    │          │          │  health: GET /healthz, 2s
->        pooled, plain   ▼          ▼          ▼
->                 ┌────────┐ ┌────────┐ ┌────────┐
->                 │ app-1  │ │ app-2  │ │ app-3  │  ← draining during deploy
->                 └───┬────┘ └───┬────┘ └───┬────┘
->                     └──────────┼──────────┘
->                          (4)   ▼
->                        ╔═════════════════╗
->                        ║ Postgres        ║
->                        ║ primary + 2 rep ║
->                        ╚═════════════════╝
+>  ┌────────┐            ╭───────────╮         ┌────────────┐
+>  │ Client │ ─── (1) ──▶ │  L7 LB    │ ─(2)─▶ │  app  x3   │
+>  └────────┘   HTTPS     │  HAProxy  │  HTTP  │  stateless │
+>                         ╰───────────╯        └────────────┘
 > ```
 >
-> Path: (1) DNS resolves the hostname to one virtual IP, not to a server. (2) The client's
-> TLS session ends at the load balancer, which is why the certificate lives there and not on
-> app-1. (3) The LB opens a pooled connection to whichever backend currently has the fewest
-> in-flight requests. (4) The app talks to the database; the LB has no idea this exists.
+> (1) Your browser connects to the load balancer, not to a server. (2) It forwards you to
+> whichever app server is healthiest right now.
 >
-> | Component | Job | Why it exists | Gone tomorrow → | Real tech |
-> |---|---|---|---|---|
-> | Virtual IP | One stable address | Clients need one target | Clients pin to real servers | anycast VIP, ELB DNS name |
-> | L7 proxy | Per-request routing | DNS decides too rarely | No draining, no path routing | Envoy, NGINX, ALB |
-> | Health checker | Removes bad backends | Servers fail without telling you | Traffic keeps hitting a dead box | Envoy active checks |
-> | Connection drain | Finishes in-flight work | Deploys would kill live requests | 502s on every deploy | ALB deregistration delay |
-> | Slow start | Ramps a new backend | Cold caches and JIT need warmup | New pods fall over on arrival | Envoy slow start |
+> Checkpoint: one of those three app servers crashes. Who notices — the load balancer, or
+> the user?
+
+### Message 3 — where you have already seen it
+
+> Correct — the load balancer notices, and the user does not. It quietly stops sending
+> traffic there.
 >
-> Checkpoint. Your health check hits `/healthz` every 2 seconds and marks a backend dead
-> after 3 failures. Your app needs 45 seconds after boot to warm its caches, and `/healthz`
-> returns 200 as soon as the process starts. Describe what a rolling deploy of six pods does
-> to your users.
-
-*Stops on the question. This one leads straight into readiness versus liveness and slow
-start, which is exactly where beat 8 needs them to be.*
-
-### Message 3 — numbers and the real world
-
-Latency added by an L7 hop, roughly a millisecond in-datacentre, versus the seconds a stale
-DNS entry costs you. Throughput per LB node. Then the disagreements, which is the actual
-content of beat 7:
-
-> Google built **Maglev** in software on commodity machines, because dedicated hardware
-> boxes could not be scaled or deployed like the rest of their fleet — it uses ECMP to spread
-> packets across many Maglev machines and consistent hashing so any of them routes a given
-> flow the same way. **Cloudflare's Unimog** solves the same problem differently, because
-> every one of their servers must be able to handle every kind of traffic. **Envoy** came out
-> of Lyft as a sidecar first and an edge proxy second, which is why its configuration is
-> dynamic rather than a file you reload. And **Stack Overflow** ran HAProxy in front of a
-> famously small number of web servers for years, which is the useful counterexample: they
-> needed the failover and the TLS termination far more than they needed the scaling.
+> You have been on the good side of this many times. Amazon deploys new code during a
+> working day and you never see a broken page, because servers are taken out of rotation,
+> drained, updated, and put back one at a time. Netflix survives losing whole machines
+> mid-stream. Every "zero downtime deploy" anyone has ever bragged about is mostly this one
+> component doing its job.
 >
-> Which of those four had a requirement your system does not have?
+> Guess: how long does a load balancer typically take to notice a dead server?
 
-### Message 4 — break it, trade-offs, exit check
+### Message 4 — the catch
 
-Single point of failure at the LB tier, and the answers: multiple nodes with anycast or a
-floating IP, health checks that check readiness rather than liveness, retry budgets so the
-LB does not amplify a partial outage into a full one. Then the trade-off table for L4 versus
-L7 versus client-side load balancing, each with its flipping condition. Then:
+> Usually a few seconds — it pings each server every couple of seconds and gives up after
+> two or three failures. Which means a few seconds of requests still go into a dead box.
+> That is the accepted cost.
+>
+> Now, this one box holds the only address your users know, and decides where all traffic
+> goes.
+>
+> What worries you about that?
 
-> **Exit check.** One hostname serves both your REST API and a WebSocket chat channel. You
-> deploy the app tier twice a day, in the middle of the working day, and you terminate TLS
-> at the edge. Tell me the load balancer type for each path, and exactly what happens to a
-> chat socket that has been open for 20 minutes when its backend is replaced.
+*A beginner says "if it dies, everything dies". They have just derived single point of
+failure unprompted. Tell them that is exactly right and name it for them.*
 
-A learner who answers this well has understood the chapter. A learner who only says "L7 for
-the API, L4 for the socket" has half of it and needs the drain question pushed on.
+### Message 5 — the payoff and exit check
+
+> That is a single point of failure, and you found it yourself. The fix is that a real load
+> balancer is never one machine — it is several, sharing one address, so any of them can
+> take your request.
+>
+> **The thing you can now say at work:** "We should drain that node before deploying rather
+> than restarting it, or in-flight requests will 502."
+>
+> **Exit check.** Your company runs one website and one live chat feature on the same
+> domain. You deploy twice a day, in the middle of the working day. Chat connections stay
+> open for twenty minutes at a time.
+>
+> When you deploy, what happens to someone in the middle of a chat — and what would you do
+> about it?
+
+### Message 6 — close
+
+Verdict on their answer, one line of recap, progress file updated, then:
+
+> That is Chapter 8 done. Next one is Chapter 9, gateways — the box that sits in front of
+> the load balancer and handles login for every service at once, so nobody has to write auth
+> code twice. Want it now or later?
